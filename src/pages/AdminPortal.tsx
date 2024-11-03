@@ -1,10 +1,30 @@
-import React from "react";
+import React, { useContext } from "react";
+import { AuthContext } from "../context/AuthContext";
 import { Product } from "../types/types";
-import { saveProductToD1 } from "../db/db";
 import { useNavigate } from "react-router-dom";
+
+const requestToServer = async (product: Product) => {
+  const WORKER_URL = import.meta.env.VITE_WORKER_URL;
+  await fetch(WORKER_URL, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      id: product.id,
+      name: product.name,
+      price: product.price,
+      image: product.image,
+      quantity: product.quantity,
+      category: "Category",
+    }),
+  });
+  console.log("Product saved to D1 database");
+};
 
 const AdminPortal: React.FC = () => {
   const navigate = useNavigate();
+  const authContext = useContext(AuthContext);
   const [products, setProducts] = React.useState<Product[]>([]);
   const [newProduct, setNewProduct] = React.useState<Partial<Product>>({});
 
@@ -18,7 +38,6 @@ const AdminPortal: React.FC = () => {
     }));
   };
 
-  //
   const handleSubmit = async (event: React.MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
     if (
@@ -34,8 +53,8 @@ const AdminPortal: React.FC = () => {
         quantity: newProduct.quantity,
         image: newProduct.image,
       };
-      // Save the new product to Cloudflare D1
-      await saveProductToD1(newProductData);
+      // Save the new product to Cloudflare D1 by requesting it to the worker
+      await requestToServer(newProductData);
       // Update the products state
       setProducts((prevProducts) => [...prevProducts, newProductData]);
       setNewProduct({});
@@ -48,6 +67,7 @@ const AdminPortal: React.FC = () => {
   };
 
   const handleClick = () => {
+    authContext?.setIsAuthenticated(false);
     navigate("/");
   };
 
