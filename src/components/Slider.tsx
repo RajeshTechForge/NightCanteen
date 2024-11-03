@@ -1,15 +1,8 @@
 import React, { useState, useEffect } from "react";
-import { OfferSlide } from "../types/types";
 
-const offerSlides: OfferSlide[] = [
-  {
-    id: 1,
-    brand: "PUMA",
-    title: "FLAT 30% Offer",
-    description: "MEN'S SHIRT",
-    image: "https://shoplane-by-lassie.netlify.app/img/img4.png",
-  },
-  // Add more slides as needed
+const sliderImages: string[] = [
+  "https://shoplane-by-lassie.netlify.app/img/img4.png",
+  // Add more slides as needed...
 ];
 
 const Slider: React.FC = () => {
@@ -17,7 +10,7 @@ const Slider: React.FC = () => {
 
   useEffect(() => {
     const timer = setInterval(() => {
-      setCurrentSlide((prev) => (prev + 1) % offerSlides.length);
+      setCurrentSlide((prev) => (prev + 1) % sliderImages.length);
     }, 5000);
 
     return () => clearInterval(timer);
@@ -29,21 +22,16 @@ const Slider: React.FC = () => {
         className="slides"
         style={{ transform: `translateX(-${currentSlide * 100}%)` }}
       >
-        {offerSlides.map((slide) => (
-          <div key={slide.id} className="slide">
+        {sliderImages.map((image) => (
+          <div className="slide">
             <div className="slide-content">
-              <img src={slide.image} alt={slide.title} />
-              <div className="slide-info">
-                <h2>{slide.brand}</h2>
-                <h3>{slide.title}</h3>
-                <p>{slide.description}</p>
-              </div>
+              <img src={image} alt="Special offer" />
             </div>
           </div>
         ))}
       </div>
       <div className="slider-dots">
-        {offerSlides.map((_, index) => (
+        {sliderImages.map((_, index) => (
           <button
             key={index}
             className={`dot ${currentSlide === index ? "active" : ""}`}
