@@ -1,11 +1,10 @@
-import React, { useContext } from "react";
+import React, { useEffect, useContext } from "react";
 import { AuthContext } from "../context/AuthContext";
 import { Product } from "../types/types";
 import { useNavigate } from "react-router-dom";
 
-const requestToServer = async (product: Product) => {
-  const WORKER_URL = import.meta.env.VITE_WORKER_URL;
-  await fetch(WORKER_URL, {
+const requestToServer = async (product: Product, SERVER_URL: string) => {
+  await fetch(`https://${SERVER_URL}/api/products`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -16,13 +15,14 @@ const requestToServer = async (product: Product) => {
       price: product.price,
       image: product.image,
       quantity: product.quantity,
-      category: "Category",
+      category: product.category,
     }),
   });
-  console.log("Product saved to D1 database");
+  console.log("Product saved to database");
 };
 
 const AdminPortal: React.FC = () => {
+  const SERVER_URL = import.meta.env.VITE_SERVER_URL;
   const navigate = useNavigate();
   const authContext = useContext(AuthContext);
   const [products, setProducts] = React.useState<Product[]>([]);
@@ -52,9 +52,10 @@ const AdminPortal: React.FC = () => {
         price: newProduct.price,
         quantity: newProduct.quantity,
         image: newProduct.image,
+        category: "Category",
       };
       // Save the new product to Cloudflare D1 by requesting it to the worker
-      await requestToServer(newProductData);
+      await requestToServer(newProductData, SERVER_URL);
       // Update the products state
       setProducts((prevProducts) => [...prevProducts, newProductData]);
       setNewProduct({});
@@ -70,6 +71,16 @@ const AdminPortal: React.FC = () => {
     authContext?.setIsAuthenticated(false);
     navigate("/");
   };
+
+  // feating data from api
+  useEffect(() => {
+    const fetchData = async () => {
+      const response = await fetch(`https://${SERVER_URL}/api/products`);
+      const data = await response.json();
+      setProducts(data);
+    };
+    fetchData();
+  });
 
   // ========================================== //
   return (

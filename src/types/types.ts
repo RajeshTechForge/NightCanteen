@@ -4,7 +4,7 @@ export interface Product {
   price: number;
   image: string;
   quantity: number;
-  // category: string;
+  category: string;
 }
 
 export interface OfferSlide {

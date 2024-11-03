@@ -1,33 +1,21 @@
-import React, { useState } from "react";
+import React from "react";
+
+// icon
+import { BiSolidUser } from "react-icons/bi";
 
 const Header: React.FC = () => {
-  const [searchTerm, setSearchTerm] = useState("");
-
   return (
     <header className="header">
       <div className="header-content">
-        <div className="logo">SHOPLANE</div>
-        <nav className="nav-links">
-          <a href="#clothing">CLOTHING</a>
-          <a href="#accessories">ACCESSORIES</a>
-        </nav>
-        <div className="search-bar">
-          <input
-            type="text"
-            placeholder="Search for Clothing and Accessories"
-            value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
-          />
-          <button className="search-button">
-            <span className="search-icon">🔍</span>
-          </button>
-        </div>
-        <div className="header-icons">
-          <div className="cart-icon">
-            <span>🛒</span>
-            <span className="cart-count">0</span>
+        <div className="logo">Night Canteen</div>
+        <div className="right-side">
+          <nav className="nav-links">
+            <a href="#clothing">PURCHASING</a>
+            <a href="#accessories">RENTING</a>
+          </nav>
+          <div className="header-icons">
+            <BiSolidUser size={20} color="#9B26B5"/>
           </div>
-          <div className="profile-icon">👤</div>
         </div>
       </div>
     </header>
