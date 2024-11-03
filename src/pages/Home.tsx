@@ -24,10 +24,19 @@ const HomePage: React.FC = () => {
       <Header />
       <main>
         <Slider />
-        <ProductSection title="Food Items" products={products} />
+        <ProductSection
+          title="Food Items"
+          products={products.filter((p) => p.category === "food")}
+        />
+        <ProductSection
+          title="Drinks"
+          products={products.filter((p) => p.category === "drinks")}
+        />
         <ProductSection
           title="Accessories"
-          products={products.filter((p) => p.category === "accessories")}
+          products={products.filter(
+            (p) => p.category === "accessories" || p.category === "other"
+          )}
         />
       </main>
       <Footer />
