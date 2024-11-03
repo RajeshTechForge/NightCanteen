@@ -14,7 +14,7 @@ const HomePage: React.FC = () => {
       quantity: 10,
       image:
         "https://assets.myntassets.com/dpr_1.5,q_60,w_400,c_limit,fl_progressive/assets/images/19449944/2022/10/19/c2adae5f-9be9-4430-999c-83c3216c29171666166203083-INVICTUS-Men-Sweatshirts-6701666166202598-1.jpg",
-      category: "clothing",
+      // category: "clothing",
     },
     // Add more products...
   ];
@@ -28,10 +28,10 @@ const HomePage: React.FC = () => {
           title="Clothing For Men And Women"
           products={products}
         />
-        <ProductSection
+        {/* <ProductSection
           title="Accessories"
           products={products.filter((p) => p.category === "accessories")}
-        />
+        /> */}
       </main>
       <Footer />
     </div>

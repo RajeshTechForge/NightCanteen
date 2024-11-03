@@ -16,7 +16,6 @@ const ProductSection: React.FC<ProductSectionProps> = ({ title, products }) => {
             <img src={product.image} alt={product.name} />
             <div className="product-info">
               <h3>{product.name}</h3>
-              <p className="brand">{product.brand}</p>
               <p className="price">Rs {product.price}</p>
             </div>
           </div>
