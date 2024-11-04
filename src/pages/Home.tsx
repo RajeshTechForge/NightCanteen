@@ -20,9 +20,8 @@ const HomePage: React.FC = () => {
   });
 
   return (
-    <div className="app">
+    <div className="home">
       <Header />
-      <main>
         <Slider />
         <ProductSection
           title="Food Items"
@@ -38,7 +37,6 @@ const HomePage: React.FC = () => {
             (p) => p.category === "accessories" || p.category === "other"
           )}
         />
-      </main>
       <Footer />
     </div>
   );

@@ -14,7 +14,7 @@ const Header: React.FC = () => {
             <a href="#accessories">RENTING</a>
           </nav>
           <div className="header-icons">
-            <BiSolidUser size={20} color="#9B26B5"/>
+            <BiSolidUser size={20} color="#9B26B5" />
           </div>
         </div>
       </div>
